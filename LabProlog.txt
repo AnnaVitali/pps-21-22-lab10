@@ -1,0 +1,97 @@
+================================== 1 ================================
+%Es1
+search(X, [X|_]).
+search(X, [_|Xs]) :- search(X, Xs).
+
+%Es 2
+search2(X, [X,X|_]).
+search2(X,[_|Xs]) :- search2(X,Xs).
+
+%Es 3
+search3(X, [X|T]):- search(X, T).
+search3(X, [_|Xs]) :- search3(X,Xs).
+
+%Es 4
+search_anytwo(X, [X|T]) :- search(X, T).
+search_anytwo(X, [_|Xs]) :- search_anytwo(X, Xs).
+
+================================== 2 ================================
+%Es 1
+size([], 0).
+size([_|Xs], N) :- size(Xs, N2), N is N2 + 1.
+
+%Es 2
+size2([], zero).
+size2([_|Xs], s(N)) :- size2(Xs, N).
+
+%Es 3
+sum([], 0).
+sum([H|Xs], N) :- sum(Xs, N2), N is N2 + H.
+
+%Es 4
+average(List, A) :- average(List, 0, 0, A).
+average([], C, S, A) :- A is S/C.
+average([X|Xs], C, S, A) :-
+  C2 is C + 1,
+  S2 is S + X,
+  average(Xs, C2, S2, A).
+
+%Es 5
+max(List, Max) :- max(List, 0, Max).
+max([], Max, Max).
+max([X|Xs],Tmax, Max) :-
+	X > Tmax,
+max(Xs, X, Max).
+max([X|Xs],Tmax, Max) :-
+	X < Tmax,
+max(Xs, Tmax, Max).
+
+%Es 6
+maxAndMin([X|Xs], Max, Min) :- maxAndMin([X|Xs], X, Max, X, Min).
+maxAndMin([], Max, Max, Min, Min).
+maxAndMin([X|Xs], Tmax, Max, Tmin, Min) :-
+	X > Tmax,
+maxAndMin(Xs, X, Max, Tmin, Min).
+maxAndMin([X|Xs], Tmax, Max, Tmin, Min) :-
+	X < Tmin,
+maxAndMin(Xs, Tmax, Max, X, Min).
+maxAndMin([X|Xs], Tmax, Max, Tmin, Min) :-
+	X =< Tmax,
+	X >= Tmin,
+maxAndMin(Xs, Tmax, Max, Tmin, Min).
+
+================================== 3 ================================
+%Es 1
+same([] ,[]) .
+same([ X | Xs ] ,[ X | Ys ]) : - same ( Xs , Ys ) .
+
+%Es 2
+allBigger([],[]).
+allBigger([X|Xs], [Y|Ys]) :-
+	X > Y,
+allBigger(Xs, Ys).
+
+%Es 3
+search(X, [X|_]).
+search(X, [_|Xs]) :- search(X, Xs).
+
+sublist([],[]).
+sublist([Y|Ys], List2) :-
+	search(Y, List2),
+sublist(Ys, List2).
+
+================================== 4 ================================
+%Es 1
+seq(0 ,[]) .
+seq(N ,[0| T ]) : - N2 is N - 1 , seq ( N2 , T )
+
+%Es 2
+seqR(0, [0]).
+seqR(N, [N|T]) :- N > 0, N2 is N - 1, seqR(N2, T).
+
+%Es 3
+last([], X, [X]).
+last([H|T], X, R) :- append([H|T], [X], R).
+
+seqR2(0, [0]).
+seqR2(N, List) :-  N > 0, N2 is N - 1, seqR2(N2, ListPrev), last(ListPrev, N, List).
